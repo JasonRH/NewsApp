@@ -1,0 +1,45 @@
+<resources>
+
+    <!--隐藏ActionBar,程序使用浅色主题-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>//状态栏背景色
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+    </style>
+
+
+    <style name="AnimationActivity" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/anim_no</item>
+        <item name="android:activityCloseEnterAnimation">@anim/anim_no</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>
+
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="TabLayout" parent="Base.Widget.Design.TabLayout">
+        <item name="tabMaxWidth">@dimen/design_tab_max_width</item>
+        <!--下标颜色-->
+        <item name="tabIndicatorColor">#00000000</item>
+        <!--下标高度-->
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabBackground">?attr/selectableItemBackground</item>
+        <!--字体-->
+        <item name="tabTextAppearance">@style/TextAppearance.Design.Tab</item>
+        <!--未选中字体颜色-->
+        <item name="tabTextColor">@color/tabTextColor</item>
+        <!--选中后字体颜色-->
+        <item name="tabSelectedTextColor">@color/tabSelectedTextColor</item>
+    </style>
+
+
+    <style name="Fullscreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/background_dark</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+</resources>

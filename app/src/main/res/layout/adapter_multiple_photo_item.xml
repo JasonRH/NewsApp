@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
+
+        <ImageView
+            android:id="@+id/photo_item_user_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/photo_item_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/photo_item_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"/>
+
+    <!-- <ViewStub
+         android:id="@+id/photo_item_image_view_stub"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout="@layadapter_photo_item_imagemage"/>-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/photo_item_multiple_recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <!-- <ViewStub
+         android:id="@+id/photo_item_video_view_stub"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout="@layadapter_photo_item_videoideo"/>-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/photo_item_digg_image"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginRight="8dp"
+                android:src="@mipmap/digg" />
+
+            <TextView
+                android:id="@+id/photo_item_digg_count"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_marginRight="18dp"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/photo_item_bury_image"
+                android:layout_width="15dp"
+                android:layout_height="14dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="2dp"
+                android:src="@mipmap/bury" />
+
+            <TextView
+                android:id="@+id/photo_item_bury_count"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_marginRight="18dp"
+                android:gravity="center_vertical"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginRight="8dp"
+                android:src="@mipmap/comments" />
+
+            <TextView
+                android:id="@+id/photo_item_comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_marginRight="18dp"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="18dp"
+            android:layout_toLeftOf="@+id/photo_item_share_count"
+            android:src="@mipmap/share" />
+
+        <TextView
+            android:id="@+id/photo_item_share_count"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:layout_alignParentRight="true"
+            android:text="20"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+</LinearLayout>
