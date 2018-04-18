@@ -1,4 +1,4 @@
-package com.example.rh.newsapp.module.home.bing;
+package com.example.rh.newsapp.module.Hotchpotch.bing;
 
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;

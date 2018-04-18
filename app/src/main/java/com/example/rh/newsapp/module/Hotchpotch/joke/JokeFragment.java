@@ -1,4 +1,4 @@
-package com.example.rh.newsapp.module.home.joke;
+package com.example.rh.newsapp.module.Hotchpotch.joke;
 
 import android.util.Log;
 import android.view.View;

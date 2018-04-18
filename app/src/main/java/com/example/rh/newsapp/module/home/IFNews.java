@@ -1,4 +1,4 @@
-package com.example.rh.newsapp.module.hot;
+package com.example.rh.newsapp.module.home;
 
 import com.example.rh.newsapp.model.NewsDetail;
 

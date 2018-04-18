@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.rh.newsapp.model.Channel;
-import com.example.rh.newsapp.module.hot.IFNewsFragment;
+import com.example.rh.newsapp.module.home.IFNewsFragment;
 
 import java.util.List;
 

@@ -1,19 +1,17 @@
-package com.example.rh.newsapp.module.home.photo;
+package com.example.rh.newsapp.module.Hotchpotch.bing;
 
-
-
-import com.example.rh.newsapp.model.PhotoArticleBean;
+import com.example.rh.newsapp.model.BingDailyBean;
 
 import java.util.List;
 
 /**
  * @author RH
+ * @date 2018/4/9
  */
-public interface IPhotoArticle {
-
+public interface IBing {
     interface View {
 
-        void onUpdateUI(List<PhotoArticleBean.Data> list);
+        void onUpdateUI(List<BingDailyBean> list);
 
         void stopLoading();
 

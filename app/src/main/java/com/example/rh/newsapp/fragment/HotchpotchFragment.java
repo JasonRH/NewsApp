@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 
 import com.example.rh.newsapp.R;
 import com.example.rh.newsapp.adapter.HomeFragmentPagerAdapter;
-import com.example.rh.newsapp.module.home.bing.BingPictureFragment;
-import com.example.rh.newsapp.module.home.joke.JokeFragment;
-import com.example.rh.newsapp.module.home.news.idata.IDNewsFragment;
-import com.example.rh.newsapp.module.home.news.toutiao.TouTiaoNewsFragment;
-import com.example.rh.newsapp.module.home.photo.PhotoFragment;
+import com.example.rh.newsapp.module.Hotchpotch.bing.BingPictureFragment;
+import com.example.rh.newsapp.module.Hotchpotch.joke.JokeFragment;
+import com.example.rh.newsapp.module.Hotchpotch.news.idata.IDNewsFragment;
+import com.example.rh.newsapp.module.Hotchpotch.news.toutiao.TouTiaoNewsFragment;
+import com.example.rh.newsapp.module.Hotchpotch.photo.PhotoFragment;
 
 import java.util.ArrayList;
 import java.util.List;

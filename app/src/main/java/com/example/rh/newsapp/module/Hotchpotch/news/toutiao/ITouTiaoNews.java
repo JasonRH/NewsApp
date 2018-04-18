@@ -1,6 +1,6 @@
-package com.example.rh.newsapp.module.home.news.idata;
+package com.example.rh.newsapp.module.Hotchpotch.news.toutiao;
 
-import com.example.rh.newsapp.model.News360Bean;
+import com.example.rh.newsapp.model.ToutiaoNewsBean;
 
 import java.util.List;
 
@@ -8,10 +8,10 @@ import java.util.List;
  * @author RH
  * @date 2018/4/11
  */
-public interface IDNews {
+public interface ITouTiaoNews {
     interface View {
 
-        void onUpdateUI(List<News360Bean.DataBean> list);
+        void onUpdateUI(List<ToutiaoNewsBean.DataBean> list);
 
         void stopLoading();
 

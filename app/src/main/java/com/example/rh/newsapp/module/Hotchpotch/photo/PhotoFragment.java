@@ -1,4 +1,4 @@
-package com.example.rh.newsapp.module.home.photo;
+package com.example.rh.newsapp.module.Hotchpotch.photo;
 
 import android.support.v7.widget.DividerItemDecoration;
 import android.util.Log;

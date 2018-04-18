@@ -25,6 +25,7 @@ public class NetWorkUtil {
             NetworkInfo networkInfo = manager != null ? manager.getActiveNetworkInfo() : null;
             //判断NetworkInfo对象是否为空
             return null != networkInfo && networkInfo.isAvailable();
+            //return null != networkInfo && networkInfo.isConnected();
         }
         return false;
     }

@@ -1,4 +1,4 @@
-package com.example.rh.newsapp.module.home.news.toutiao;
+package com.example.rh.newsapp.module.Hotchpotch.news.toutiao;
 
 import com.example.rh.newsapp.base.BasePresenter;
 import com.example.rh.newsapp.model.ToutiaoNewsBean;

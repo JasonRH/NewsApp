@@ -1,4 +1,4 @@
-package com.example.rh.newsapp.module.home.news.idata;
+package com.example.rh.newsapp.module.Hotchpotch.news.idata;
 
 import android.support.v7.widget.DividerItemDecoration;
 import android.view.View;

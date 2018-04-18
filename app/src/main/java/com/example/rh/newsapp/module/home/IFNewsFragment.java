@@ -1,4 +1,4 @@
-package com.example.rh.newsapp.module.hot;
+package com.example.rh.newsapp.module.home;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +13,8 @@ import com.example.rh.newsapp.base.BaseHomeFragment;
 import com.example.rh.newsapp.model.NewsDetail;
 import com.example.rh.newsapp.network.api.IFApi;
 import com.example.rh.newsapp.utils.MyToast;
+import com.example.rh.newsapp.widget.CustomLoadMoreView;
+import com.kennyc.view.MultiStateView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,7 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
     private static final String TAG = "IFNewsFragment";
     private PtrClassicFrameLayout ptrClassicFrameLayout;
     private RecyclerView recyclerView;
+    private MultiStateView multiStateView;
     private int upPullNum = 1;
     private int downPullNum = 1;
     private IFNewsAdapter ifNewsAdapter;
@@ -58,6 +61,7 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
     @Override
     protected void initView(View view) {
         ptrClassicFrameLayout = view.findViewById(R.id.if_news_ptrClassicFrameLayout);
+        multiStateView = view.findViewById(R.id.if_news_multiStateView);
         recyclerView = view.findViewById(R.id.if_news_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         //初始化下拉刷新控件
@@ -68,6 +72,8 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
         recyclerView.setAdapter(ifNewsAdapter);
 
         ifNewsAdapter.setEnableLoadMore(true);
+        //开源控件，自定义下拉动画
+        ifNewsAdapter.setLoadMoreView(new CustomLoadMoreView());
         ifNewsAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         ifNewsAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
@@ -110,10 +116,14 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
     @Override
     public void loadData(List<NewsDetail.ItemBean> itemBeanList) {
         if (itemBeanList == null || itemBeanList.size() == 0) {
+            //下拉刷新完成
             ptrClassicFrameLayout.refreshComplete();
-            Log.e(TAG, "loadData: null");
+            //根据状态更改布局
+            if (multiStateView.getViewState() != MultiStateView.VIEW_STATE_CONTENT) {
+                multiStateView.setViewState(MultiStateView.VIEW_STATE_ERROR);
+            }
         } else {
-            Log.e(TAG, "loadData: 非null");
+            multiStateView.setViewState(MultiStateView.VIEW_STATE_CONTENT);
             downPullNum++;
             ifNewsAdapter.setNewData(itemBeanList);
             ptrClassicFrameLayout.refreshComplete();
@@ -135,13 +145,10 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
     public void loadMoreData(List<NewsDetail.ItemBean> itemBeanList) {
         if (itemBeanList == null || itemBeanList.size() == 0) {
             ifNewsAdapter.loadMoreFail();
-            Log.e(TAG, "loadMoreData: 失败");
-
         } else {
             upPullNum++;
             ifNewsAdapter.addData(itemBeanList);
             ifNewsAdapter.loadMoreComplete();
-            Log.i(TAG, "loadMoreData: " + itemBeanList.toString());
         }
     }
 

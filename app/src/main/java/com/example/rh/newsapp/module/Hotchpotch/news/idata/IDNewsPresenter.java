@@ -1,4 +1,4 @@
-package com.example.rh.newsapp.module.home.news.idata;
+package com.example.rh.newsapp.module.Hotchpotch.news.idata;
 
 import com.example.rh.newsapp.base.BasePresenter;
 import com.example.rh.newsapp.model.News360Bean;

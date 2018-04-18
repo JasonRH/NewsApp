@@ -1,4 +1,4 @@
-package com.example.rh.newsapp.module.home.news.toutiao;
+package com.example.rh.newsapp.module.Hotchpotch.news.toutiao;
 
 import android.support.v7.widget.DividerItemDecoration;
 import android.view.View;

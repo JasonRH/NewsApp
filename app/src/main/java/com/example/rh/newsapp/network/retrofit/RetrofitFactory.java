@@ -41,9 +41,9 @@ public class RetrofitFactory {
                 if (retrofit == null) {
                     retrofit = new Retrofit.Builder()
                             .baseUrl(NeiHanService.BASEURL)
+                            .client(myokhttpclient())
                             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                             .addConverterFactory(GsonConverterFactory.create())
-                            .client(myokhttpclient())
                             .build();
                 }
             }

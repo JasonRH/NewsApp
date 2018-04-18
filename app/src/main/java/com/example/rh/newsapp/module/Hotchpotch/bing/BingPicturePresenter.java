@@ -1,4 +1,4 @@
-package com.example.rh.newsapp.module.home.bing;
+package com.example.rh.newsapp.module.Hotchpotch.bing;
 
 import android.accounts.NetworkErrorException;
 

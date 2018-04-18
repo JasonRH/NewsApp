@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <in.srain.cube.views.ptr.PtrClassicFrameLayout
@@ -9,10 +10,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/if_news_recyclerView"
+        <com.kennyc.view.MultiStateView
+            android:id="@+id/if_news_multiStateView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:msv_errorView="@layout/view_error"
+            app:msv_loadingView="@layout/view_loading"
+            app:msv_animateViewChanges="false"
+            app:msv_viewState="loading">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/if_news_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.kennyc.view.MultiStateView>
+
     </in.srain.cube.views.ptr.PtrClassicFrameLayout>
 
 
