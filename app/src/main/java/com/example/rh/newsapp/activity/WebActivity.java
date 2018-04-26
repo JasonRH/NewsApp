@@ -65,9 +65,8 @@ public class WebActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        url = getIntent().getStringExtra("joke_url");
-        content = getIntent().getStringExtra("joke_content");
-
+        url = getIntent().getStringExtra("url");
+        content = getIntent().getStringExtra("content");
     }
 
     private void initView() {
@@ -94,7 +93,16 @@ public class WebActivity extends AppCompatActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     private void initWebView() {
+        webView.setVerticalScrollBarEnabled(false);
+        webView.setVerticalScrollbarOverlay(false);
+        webView.setHorizontalScrollBarEnabled(false);
+        webView.setHorizontalScrollbarOverlay(false);
+        webView.getSettings().setDomStorageEnabled(true);
+
         WebSettings webSettings = webView.getSettings();
+        webSettings.setAppCacheEnabled(true);
+        webSettings.setAllowFileAccessFromFileURLs(true);
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         //如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
         webSettings.setJavaScriptEnabled(true);
         //设置自适应屏幕，两者合用
@@ -111,7 +119,7 @@ public class WebActivity extends AppCompatActivity {
         webSettings.setDisplayZoomControls(false);
         //其他细节操作
         //设置缓存，根据cache-control决定是否从网络上取数据
-        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         //设置可以访问文件
         webSettings.setAllowFileAccess(true);
         //支持通过JS打开新窗口

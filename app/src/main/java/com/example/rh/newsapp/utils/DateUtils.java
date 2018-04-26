@@ -14,9 +14,9 @@ public class DateUtils {
     /**
      * @return 时间戳转换为当前时间年月（时间戳单位为秒）
      */
-    public static String millis2CurrentTime(long millis){
+    public static String millis2CurrentTime(long millis) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM--dd", Locale.getDefault());
-        return simpleDateFormat.format(new Date(millis*1000));
+        return simpleDateFormat.format(new Date(millis * 1000));
     }
 
     /**
@@ -27,6 +27,7 @@ public class DateUtils {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM—dd HH:mm", Locale.getDefault());
         return simpleDateFormat.format(calendar.getTime());
     }
+
     /**
      * 根据时间戳 返回发布时间距离当前的时间
      */
@@ -41,6 +42,19 @@ public class DateUtils {
             e.printStackTrace();
         }
         return timeAgo(date);
+    }
+
+
+    /**
+     * String 转换 Date
+     */
+    public static Date string2Date(String str, String format) {
+        try {
+            return new SimpleDateFormat(format).parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Date();
     }
 
     /**

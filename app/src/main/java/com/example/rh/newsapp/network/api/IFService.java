@@ -1,5 +1,6 @@
 package com.example.rh.newsapp.network.api;
 
+import com.example.rh.newsapp.model.NewsArticleBean;
 import com.example.rh.newsapp.model.NewsDetail;
 
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 /**
  * @author RH
@@ -18,4 +20,11 @@ public interface IFService {
     Observable<List<NewsDetail>> getNewsDetail(@Query("id") String id,
                                                @Query("action") String action,
                                                @Query("pullNum") int pullNum);
-}
+
+
+    @GET(IFApi.IFengApi+"api_vampire_article_detail")
+    Observable<NewsArticleBean> getNewsArticleWithSub(@Query("aid") String aid);
+
+    @GET
+    Observable<NewsArticleBean> getNewsArticleWithCmpp(@Url String url,
+                                                       @Query("aid") String aid);}

@@ -1,13 +1,17 @@
 package com.example.rh.newsapp.module.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.rh.newsapp.R;
+import com.example.rh.newsapp.activity.ArticleActivity;
+import com.example.rh.newsapp.activity.WebActivity;
 import com.example.rh.newsapp.adapter.IFNewsAdapter;
 import com.example.rh.newsapp.base.BaseHomeFragment;
 import com.example.rh.newsapp.model.NewsDetail;
@@ -23,6 +27,7 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * @author RH
@@ -37,6 +42,8 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
     private int downPullNum = 1;
     private IFNewsAdapter ifNewsAdapter;
     private List<NewsDetail.ItemBean> beanList = new ArrayList<>();
+
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public static IFNewsFragment newInstance(String newsId) {
         IFNewsFragment fragment = new IFNewsFragment();
@@ -54,7 +61,7 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
 
     @Override
     protected void setPresenter() {
-        presenter = new IFNewsPresenter();
+        presenter = new IFNewsPresenter(compositeDisposable);
     }
 
 
@@ -75,12 +82,58 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
         //开源控件，自定义下拉动画
         ifNewsAdapter.setLoadMoreView(new CustomLoadMoreView());
         ifNewsAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+        //下拉加载更过
         ifNewsAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
                 presenter.getData(getArguments().getString("id"), IFApi.ACTION_UP, upPullNum);
             }
         }, recyclerView);
+
+        //item的点击事件
+        ifNewsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                NewsDetail.ItemBean itemBean = (NewsDetail.ItemBean) adapter.getItem(position);
+                if (itemBean == null) {
+                    return;
+                } else {
+                    switch (itemBean.getItemType()) {
+                        case NewsDetail.ItemBean.TYPE_DOC_TITLEIMG:
+                        case NewsDetail.ItemBean.TYPE_DOC_SLIDEIMG:
+                            Intent intent = new Intent(getActivity(), ArticleActivity.class);
+                            intent.putExtra("url", itemBean.getDocumentId());
+                            startActivity(intent);
+                            break;
+                        case NewsDetail.ItemBean.TYPE_SLIDE:
+                            //ImageBrowseActivity.launch(getActivity(), itemBean);
+                            break;
+                        case NewsDetail.ItemBean.TYPE_ADVERT_TITLEIMG:
+                        case NewsDetail.ItemBean.TYPE_ADVERT_SLIDEIMG:
+                        case NewsDetail.ItemBean.TYPE_ADVERT_LONGIMG:
+                            String url = itemBean.getLink().getWeburl();
+                            if (!TextUtils.isEmpty(url)){
+                                Intent ad_intent = new Intent(getActivity(), WebActivity.class);
+                                ad_intent.putExtra("url", itemBean.getLink().getWeburl());
+                                startActivity(ad_intent);
+                            }
+                            break;
+                        case NewsDetail.ItemBean.TYPE_PHVIDEO:
+                            MyToast.show("TYPE_PHVIDEO");
+                            break;
+                        default:
+                    }
+
+                }
+            }
+        });
+        //Item子控件的点击事件
+        ifNewsAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+        });
 
     }
 
@@ -155,5 +208,11 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
     @Override
     public void showToast(String s) {
         MyToast.show(s);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
     }
 }

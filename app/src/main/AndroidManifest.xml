@@ -35,7 +35,13 @@
         <activity
             android:name=".activity.PictureActivity"
             android:label=""
-            android:theme="@style/AppTheme" />
+            android:theme="@style/PictureTheme" />
+
+        <activity
+            android:name=".activity.ArticleActivity"
+            android:screenOrientation="portrait"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 
 </manifest>

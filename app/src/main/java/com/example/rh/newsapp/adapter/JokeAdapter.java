@@ -91,8 +91,8 @@ public class JokeAdapter extends RecyclerView.Adapter<JokeAdapter.ViewHold> {
 
             holder.linearLayout.setOnClickListener(v -> {
                 Intent intent = new Intent(context, WebActivity.class);
-                intent.putExtra("joke_url", "http://m.neihanshequ.com/group/" + jokeDataDataEntity.getGroup().getGroup_id());
-                intent.putExtra("joke_content", jokeDataDataEntity.getGroup().getContent());
+                intent.putExtra("url", "http://m.neihanshequ.com/group/" + jokeDataDataEntity.getGroup().getGroup_id());
+                intent.putExtra("content", jokeDataDataEntity.getGroup().getContent());
                 context.startActivity(intent);
             });
 

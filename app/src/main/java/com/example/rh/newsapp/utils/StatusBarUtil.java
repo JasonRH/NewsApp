@@ -30,12 +30,12 @@ public class StatusBarUtil {
                 } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     //window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                     window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
                     result = 3;
                 } else {
                     //Android6.0以下无法修改
                 }
             }
+            Log.e("StatusBarUtil", "getStatusBarLightMode: "+result );
             return result;
         }
 

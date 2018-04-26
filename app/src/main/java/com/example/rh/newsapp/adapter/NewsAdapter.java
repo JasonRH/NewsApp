@@ -57,9 +57,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             } else {
                 holder.news_images.setVisibility(View.VISIBLE);
                 holder.news_image.setVisibility(View.GONE);
-                Glide.with(context).load(dataBean.getImageUrls().get(0)).into(holder.news_images_0);
-                Glide.with(context).load(dataBean.getImageUrls().get(1)).into(holder.news_images_1);
-                Glide.with(context).load(dataBean.getImageUrls().get(2)).into(holder.news_images_2);
+                for (int i= 0; i<dataBean.getImageUrls().size();i++){
+                    if (i==0) {
+                        Glide.with(context).load(dataBean.getImageUrls().get(0)).into(holder.news_images_0);
+                    }else if (i==1){
+                        Glide.with(context).load(dataBean.getImageUrls().get(1)).into(holder.news_images_1);
+                    }else if (i==2){
+                        Glide.with(context).load(dataBean.getImageUrls().get(2)).into(holder.news_images_2);
+                    }
+                }
             }
 
         }else {

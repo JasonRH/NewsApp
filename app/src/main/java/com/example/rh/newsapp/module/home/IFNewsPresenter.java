@@ -13,6 +13,7 @@ import java.util.List;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -22,6 +23,12 @@ import io.reactivex.schedulers.Schedulers;
  * @date 2018/4/12
  */
 public class IFNewsPresenter extends BasePresenter<IFNews.View> implements IFNews.Presenter {
+    private CompositeDisposable disposable;
+
+    public IFNewsPresenter(CompositeDisposable compositeDisposable) {
+        disposable = compositeDisposable;
+    }
+
     @Override
     public void getData(final String id, final String action, int pullNum) {
         RetrofitFactory.getRetrofit().create(IFService.class).getNewsDetail(id, action, pullNum)
@@ -97,7 +104,7 @@ public class IFNewsPresenter extends BasePresenter<IFNews.View> implements IFNew
                 .subscribe(new Observer<List<NewsDetail.ItemBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        disposable.add(d);
                     }
 
                     @Override

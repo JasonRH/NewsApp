@@ -20,6 +20,16 @@ public class Main3Activity extends BaseActivity {
     private HomeFragment homeFragment;
 
     @Override
+    protected void onLazyLoad() {
+
+    }
+
+    @Override
+    protected void setPresenter() {
+
+    }
+
+    @Override
     public int setLayoutId() {
         return R.layout.activity_main3;
     }
@@ -61,18 +71,18 @@ public class Main3Activity extends BaseActivity {
         hideFragment(fragmentManager);
         switch (index) {
             case 0:
-                if(homeFragment == null){
+                if (homeFragment == null) {
                     homeFragment = HomeFragment.getInstance();
-                    fragmentManager.add(R.id.main_activity_container , homeFragment);
-                }else {
+                    fragmentManager.add(R.id.main_activity_container, homeFragment);
+                } else {
                     fragmentManager.show(homeFragment);
                 }
                 break;
             case 1:
-                if (videoFragment == null){
+                if (videoFragment == null) {
                     videoFragment = VideoFragment.getInstance();
-                    fragmentManager.add(R.id.main_activity_container , videoFragment);
-                }else {
+                    fragmentManager.add(R.id.main_activity_container, videoFragment);
+                } else {
                     fragmentManager.show(videoFragment);
                 }
                 break;
@@ -99,7 +109,7 @@ public class Main3Activity extends BaseActivity {
         if (videoFragment != null) {
             fragmentManager.hide(videoFragment);
         }
-        if (homeFragment != null){
+        if (homeFragment != null) {
             fragmentManager.hide(homeFragment);
         }
     }

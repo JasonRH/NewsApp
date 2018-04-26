@@ -42,14 +42,14 @@ public class PictureActivity extends AppCompatActivity {
         String pictureImageId = bingDailyBean.getUrl();
         words = bingDailyBean.getCopyright();
 
-        Toolbar toolbar1 = (Toolbar) findViewById(R.id.toolbar1);
+       // Toolbar toolbar1 = (Toolbar) findViewById(R.id.toolbar1);
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_tool);
         ImageView pictureImageView = (ImageView) findViewById(R.id.picture_image_view);
         author = (TextView) findViewById(R.id.picture_author);
         title = (TextView) findViewById(R.id.picture_title);
         pictureContentText = (TextView) findViewById(R.id.picture_content_text);
         //设置toolbar替代原ActionBar
-        setSupportActionBar(toolbar1);
+        //setSupportActionBar(toolbar1);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);

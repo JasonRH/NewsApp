@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--头布局-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/activity_article_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            app:srcCompat="@drawable/ic_arrow_back_white_24dp" />
+
+        <RelativeLayout
+            android:id="@+id/activity_article_topRelative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/activity_article_back"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/activity_article_topLogo"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@mipmap/icon" />
+
+            <TextView
+                android:id="@+id/activity_article_topname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/activity_article_topLogo"
+                android:layout_marginLeft="8dp"
+                android:layout_toEndOf="@+id/activity_article_topLogo"
+                android:layout_toRightOf="@+id/activity_article_topLogo"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/activity_article_topCateName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/activity_article_topLogo"
+                android:layout_marginLeft="8dp"
+                android:layout_toEndOf="@+id/activity_article_topLogo"
+                android:layout_toRightOf="@+id/activity_article_topLogo"
+                android:textColor="#3b3939"
+                android:textSize="@dimen/sp_12" />
+
+            <Button
+                android:id="@+id/activity_article_topButton"
+                android:layout_width="50dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="40dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/read_bt_bg"
+                android:text="关注"
+                android:textColor="@android:color/white" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            app:srcCompat="@drawable/ic_more_vert_white_24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="#e6e6e6" />
+    </RelativeLayout>
+
+    <!--内容布局-->
+    <com.example.rh.newsapp.widget.ObservableScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/activity_article_ObservableScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:descendantFocusability="blocksDescendants"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+
+
+        <com.kennyc.view.MultiStateView
+            android:id="@+id/activity_article_MultiStateView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:msv_errorView="@layout/view_retry"
+            app:msv_loadingView="@layout/view_loading"
+            app:msv_viewState="loading">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/activity_article_relative"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/activity_article_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginTop="8dp"
+                        android:text=""
+                        android:textColor="#333333"
+                        android:textSize="24sp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/activity_article_title">
+
+
+                        <ImageView
+                            android:id="@+id/activity_article_logo"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="8dp"
+                            android:src="@mipmap/icon" />
+
+                        <TextView
+                            android:id="@+id/activity_article_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@id/activity_article_logo"
+                            android:layout_marginLeft="8dp"
+                            android:layout_toRightOf="@id/activity_article_logo"
+                            android:text=""
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/activity_article_updateTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@id/activity_article_logo"
+                            android:layout_marginLeft="8dp"
+                            android:layout_toRightOf="@id/activity_article_logo"
+                            android:text=""
+                            android:textColor="#989898"
+                            android:textSize="@dimen/sp_12" />
+
+                        <Button
+                            android:id="@+id/activity_article_button"
+                            android:layout_width="50dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginRight="15dp"
+                            android:background="@drawable/read_bt_bg"
+                            android:text="关注"
+                            android:textColor="@android:color/white" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <!--WebView高度必须为wrap_content-->
+                <WebView
+                    android:id="@+id/activity_article_webView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white" />
+
+            </LinearLayout>
+
+        </com.kennyc.view.MultiStateView>
+
+    </com.example.rh.newsapp.widget.ObservableScrollView>
+
+</LinearLayout>
