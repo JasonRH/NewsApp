@@ -1,5 +1,7 @@
 package com.example.rh.newsapp.module.home;
 
+import android.util.Log;
+
 import com.example.rh.newsapp.base.BasePresenter;
 import com.example.rh.newsapp.model.NewsDetail;
 import com.example.rh.newsapp.network.api.IFApi;
@@ -34,6 +36,7 @@ public class IFNewsPresenter extends BasePresenter<IFNews.View> implements IFNew
         RetrofitFactory.getRetrofit().create(IFService.class).getNewsDetail(id, action, pullNum)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .map(new Function<List<NewsDetail>, NewsDetail>() {
                     @Override
                     public NewsDetail apply(List<NewsDetail> newsDetails) throws Exception {
@@ -48,6 +51,7 @@ public class IFNewsPresenter extends BasePresenter<IFNews.View> implements IFNew
                         return newsDetails.get(0);
                     }
                 })
+                .observeOn(Schedulers.io())
                 .map(new Function<NewsDetail, List<NewsDetail.ItemBean>>() {
                     @Override
                     public List<NewsDetail.ItemBean> apply(@NonNull NewsDetail newsDetail) throws Exception {

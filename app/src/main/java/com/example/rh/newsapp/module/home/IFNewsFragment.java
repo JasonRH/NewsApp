@@ -1,12 +1,17 @@
 package com.example.rh.newsapp.module.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.rh.newsapp.R;
@@ -16,9 +21,17 @@ import com.example.rh.newsapp.adapter.IFNewsAdapter;
 import com.example.rh.newsapp.base.BaseHomeFragment;
 import com.example.rh.newsapp.model.NewsDetail;
 import com.example.rh.newsapp.network.api.IFApi;
+import com.example.rh.newsapp.utils.IFNewsUtils;
+import com.example.rh.newsapp.utils.ImageLoaderUtil;
 import com.example.rh.newsapp.utils.MyToast;
 import com.example.rh.newsapp.widget.CustomLoadMoreView;
+import com.github.florent37.viewanimator.AnimationListener;
+import com.github.florent37.viewanimator.ViewAnimator;
 import com.kennyc.view.MultiStateView;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.listener.OnBannerListener;
+import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +51,20 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
     private PtrClassicFrameLayout ptrClassicFrameLayout;
     private RecyclerView recyclerView;
     private MultiStateView multiStateView;
+    private RelativeLayout topToastRelativeLayout;
+    private TextView topToastTextView;
     private int upPullNum = 1;
     private int downPullNum = 1;
     private IFNewsAdapter ifNewsAdapter;
     private List<NewsDetail.ItemBean> beanList = new ArrayList<>();
+
+    private List<NewsDetail.ItemBean> mBannerList = new ArrayList<>();
+    /**
+     * 顶部banner
+     */
+    private View viewFocus;
+    private Banner mBanner;
+    private boolean isRemoveHeaderView = false;
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -67,10 +90,14 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
 
     @Override
     protected void initView(View view) {
+        topToastRelativeLayout = view.findViewById(R.id.if_news_top_toast_relative);
+        topToastTextView = view.findViewById(R.id.if_news_top_toast_tv);
+
         ptrClassicFrameLayout = view.findViewById(R.id.if_news_ptrClassicFrameLayout);
         multiStateView = view.findViewById(R.id.if_news_multiStateView);
         recyclerView = view.findViewById(R.id.if_news_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         //初始化下拉刷新控件
         initPtrClassicFrameLayout();
 
@@ -95,36 +122,7 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 NewsDetail.ItemBean itemBean = (NewsDetail.ItemBean) adapter.getItem(position);
-                if (itemBean == null) {
-                    return;
-                } else {
-                    switch (itemBean.getItemType()) {
-                        case NewsDetail.ItemBean.TYPE_DOC_TITLEIMG:
-                        case NewsDetail.ItemBean.TYPE_DOC_SLIDEIMG:
-                            Intent intent = new Intent(getActivity(), ArticleActivity.class);
-                            intent.putExtra("url", itemBean.getDocumentId());
-                            startActivity(intent);
-                            break;
-                        case NewsDetail.ItemBean.TYPE_SLIDE:
-                            //ImageBrowseActivity.launch(getActivity(), itemBean);
-                            break;
-                        case NewsDetail.ItemBean.TYPE_ADVERT_TITLEIMG:
-                        case NewsDetail.ItemBean.TYPE_ADVERT_SLIDEIMG:
-                        case NewsDetail.ItemBean.TYPE_ADVERT_LONGIMG:
-                            String url = itemBean.getLink().getWeburl();
-                            if (!TextUtils.isEmpty(url)){
-                                Intent ad_intent = new Intent(getActivity(), WebActivity.class);
-                                ad_intent.putExtra("url", itemBean.getLink().getWeburl());
-                                startActivity(ad_intent);
-                            }
-                            break;
-                        case NewsDetail.ItemBean.TYPE_PHVIDEO:
-                            MyToast.show("TYPE_PHVIDEO");
-                            break;
-                        default:
-                    }
-
-                }
+                toStartActivity(itemBean);
             }
         });
         //Item子控件的点击事件
@@ -135,14 +133,13 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
             }
         });
 
+        //初始化轮播图
+        initBanner();
     }
-
 
     @Override
     public void onLazyLoad() {
-        if (getArguments() == null) {
-            return;
-        } else {
+        if (getArguments() != null) {
             presenter.getData(getArguments().getString("id"), IFApi.ACTION_DEFAULT, 1);
         }
     }
@@ -160,14 +157,46 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
+                //移除RecycleView的头部轮播图
+                isRemoveHeaderView = true;
                 //加载数据
                 presenter.getData(getArguments().getString("id"), IFApi.ACTION_DOWN, downPullNum);
             }
         });
     }
 
+    /**
+     * 轮播图
+     */
+    private void initBanner() {
+        viewFocus = LayoutInflater.from(getActivity()).inflate(R.layout.news_detail_headerview, null);
+        mBanner =  viewFocus.findViewById(R.id.banner);
+        //设置banner样式
+        mBanner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
+                .setImageLoader(new ImageLoader() {
+                    @Override
+                    public void displayImage(Context context, Object path, ImageView imageView) {
+                        //Glide 加载图片简单用法
+                        ImageLoaderUtil.LoadImage(getActivity(), path, imageView);
+                    }
+                })
+                .setDelayTime(3000)
+                .setIndicatorGravity(BannerConfig.RIGHT);
+        mBanner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                if (mBannerList.size() < 1) {
+                    return;
+                }
+                toTopStartActivity(mBannerList.get(position));
+            }
+        });
+    }
+
+
     @Override
     public void loadData(List<NewsDetail.ItemBean> itemBeanList) {
+        Log.e(TAG, "loadData: ");
         if (itemBeanList == null || itemBeanList.size() == 0) {
             //下拉刷新完成
             ptrClassicFrameLayout.refreshComplete();
@@ -178,19 +207,43 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
         } else {
             multiStateView.setViewState(MultiStateView.VIEW_STATE_CONTENT);
             downPullNum++;
+            if (isRemoveHeaderView) {
+                //移除顶部轮播图
+                ifNewsAdapter.removeAllHeaderView();
+            }
             ifNewsAdapter.setNewData(itemBeanList);
+            showTopToast(itemBeanList.size());
             ptrClassicFrameLayout.refreshComplete();
         }
     }
 
+
     @Override
     public void loadBannerData(NewsDetail newsDetail) {
         Log.e(TAG, "loadBannerData: ");
+        List<String> mTitleList = new ArrayList<>();
+        List<String> mUrlList = new ArrayList<>();
+        mBannerList.clear();
+        for (NewsDetail.ItemBean bean : newsDetail.getItem()) {
+            if (!TextUtils.isEmpty(bean.getThumbnail())) {
+                mTitleList.add(bean.getTitle());
+                mBannerList.add(bean);
+                mUrlList.add(bean.getThumbnail());
+            }
+        }
+        if (mUrlList.size() > 0) {
+            mBanner.setImages(mUrlList);
+            mBanner.setBannerTitles(mTitleList);
+            mBanner.start();
+            if (ifNewsAdapter.getHeaderLayoutCount() < 1) {
+                ifNewsAdapter.addHeaderView(viewFocus);
+            }
+        }
     }
 
     @Override
     public void loadTopNewsData(NewsDetail newsDetail) {
-        Log.e(TAG, "loadTopNewsData: ");
+        //Log.e(TAG, "loadTopNewsData: ");
     }
 
 
@@ -208,6 +261,87 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
     @Override
     public void showToast(String s) {
         MyToast.show(s);
+    }
+
+    private void showTopToast(int size) {
+        topToastTextView.setText(String.format("已为您推荐了%1$s条新资讯", size));
+        topToastRelativeLayout.setVisibility(View.VISIBLE);
+        ViewAnimator.animate(topToastRelativeLayout)
+                .newsPaper()
+                .duration(1000)
+                .start()
+                .onStop(new AnimationListener.Stop() {
+                    @Override
+                    public void onStop() {
+                        ViewAnimator.animate(topToastRelativeLayout)
+                                .bounceOut()
+                                .duration(1000)
+                                .start();
+                    }
+                });
+    }
+
+    /**
+     * 打开新闻详情页
+     */
+    private void toStartActivity(NewsDetail.ItemBean itemBean) {
+        if (itemBean != null) {
+            switch (itemBean.getItemType()) {
+                case NewsDetail.ItemBean.TYPE_DOC_TITLEIMG:
+                case NewsDetail.ItemBean.TYPE_DOC_SLIDEIMG:
+                    Intent intent = new Intent(getActivity(), ArticleActivity.class);
+                    intent.putExtra("url", itemBean.getDocumentId());
+                    startActivity(intent);
+                    break;
+                case NewsDetail.ItemBean.TYPE_SLIDE:
+                    Log.e(TAG, "toStartActivity:TYPE_SLIDE ");
+                    break;
+                case NewsDetail.ItemBean.TYPE_ADVERT_TITLEIMG:
+                case NewsDetail.ItemBean.TYPE_ADVERT_SLIDEIMG:
+                case NewsDetail.ItemBean.TYPE_ADVERT_LONGIMG:
+                    String url = itemBean.getLink().getWeburl();
+                    if (!TextUtils.isEmpty(url)) {
+                        Intent adIntent = new Intent(getActivity(), WebActivity.class);
+                        adIntent.putExtra("url", itemBean.getLink().getWeburl());
+                        startActivity(adIntent);
+                    }
+                    break;
+                case NewsDetail.ItemBean.TYPE_PHVIDEO:
+                    MyToast.show("TYPE_PHVIDEO");
+                    break;
+                default:
+            }
+        }
+    }
+
+    /**
+     * 打开轮播图详情页
+     */
+    private void toTopStartActivity(NewsDetail.ItemBean itemBean) {
+        if (itemBean != null) {
+            switch (itemBean.getType()) {
+                case IFNewsUtils.TYPE_DOC:
+                    Intent intent = new Intent(getActivity(), ArticleActivity.class);
+                    intent.putExtra("url", itemBean.getDocumentId());
+                    startActivity(intent);
+                    break;
+                case IFNewsUtils.TYPE_SLIDE:
+                    Log.e(TAG, "toTopStartActivity:TYPE_SLIDE ");
+                    break;
+                case IFNewsUtils.TYPE_ADVERT:
+                    String url = itemBean.getLink().getWeburl();
+                    if (!TextUtils.isEmpty(url)) {
+                        Intent adIntent = new Intent(getActivity(), WebActivity.class);
+                        adIntent.putExtra("url", itemBean.getLink().getWeburl());
+                        startActivity(adIntent);
+                    }
+                    break;
+                case IFNewsUtils.TYPE_PHVIDEO:
+                    MyToast.show("TYPE_PHVIDEO");
+                    break;
+                default:
+            }
+        }
     }
 
     @Override

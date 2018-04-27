@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <in.srain.cube.views.ptr.PtrClassicFrameLayout
         android:id="@+id/if_news_ptrClassicFrameLayout"
@@ -28,5 +27,22 @@
 
     </in.srain.cube.views.ptr.PtrClassicFrameLayout>
 
+    <RelativeLayout
+        android:id="@+id/if_news_top_toast_relative"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#D6E9F6"
+        android:visibility="gone">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/if_news_top_toast_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/news_toast"
+            android:textColor="#3393D5"
+            android:textSize="12sp"
+            />
+    </RelativeLayout>
+
+</FrameLayout>
