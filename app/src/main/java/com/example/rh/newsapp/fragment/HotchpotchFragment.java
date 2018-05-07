@@ -13,8 +13,6 @@ import com.example.rh.newsapp.R;
 import com.example.rh.newsapp.adapter.HomeFragmentPagerAdapter;
 import com.example.rh.newsapp.module.Hotchpotch.bing.BingPictureFragment;
 import com.example.rh.newsapp.module.Hotchpotch.joke.JokeFragment;
-import com.example.rh.newsapp.module.Hotchpotch.news.idata.IDNewsFragment;
-import com.example.rh.newsapp.module.Hotchpotch.news.toutiao.TouTiaoNewsFragment;
 import com.example.rh.newsapp.module.Hotchpotch.photo.PhotoFragment;
 
 import java.util.ArrayList;
@@ -57,13 +55,11 @@ public class HotchpotchFragment extends Fragment {
 
     private void initFragmentPagerAdapter() {
         List<Fragment> fragmentList = new ArrayList<>();
-        String[] strings = new String[]{"360", "新闻", "段子", "图片", "必应"};
+        String[] strings = new String[]{"必应", "段子", "图片"};
 
-        fragmentList.add(IDNewsFragment.getInstance());
-        fragmentList.add(TouTiaoNewsFragment.getInstance());
+        fragmentList.add(BingPictureFragment.getInstance());
         fragmentList.add(JokeFragment.getInstance());
         fragmentList.add(PhotoFragment.getInstance());
-        fragmentList.add(BingPictureFragment.getInstance());
 
         HomeFragmentPagerAdapter pagerAdapter = new HomeFragmentPagerAdapter(getChildFragmentManager(), fragmentList, strings);
         viewPager.setAdapter(pagerAdapter);
