@@ -47,6 +47,8 @@ public abstract class BaseHomeFragment<T extends BasePresenter> extends SupportF
     /**
      * 懒加载：方案二
      * 使用fragmentation实现懒加载
+     *
+     * 先initView()后onLazyInitView()
      */
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {

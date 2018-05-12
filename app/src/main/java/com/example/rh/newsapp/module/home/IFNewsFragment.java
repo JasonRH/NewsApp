@@ -79,7 +79,7 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
     @Override
 
     protected int getLayoutId() {
-        return R.layout.base_fragment_if_news;
+        return R.layout.base_fragment_if;
     }
 
     @Override
@@ -113,7 +113,9 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
         ifNewsAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                presenter.getData(getArguments().getString("id"), IFApi.ACTION_UP, upPullNum);
+                if (getArguments() != null) {
+                    presenter.getData(getArguments().getString("id"), IFApi.ACTION_UP, upPullNum);
+                }
             }
         }, recyclerView);
 
@@ -160,7 +162,9 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
                 //移除RecycleView的头部轮播图
                 isRemoveHeaderView = true;
                 //加载数据
-                presenter.getData(getArguments().getString("id"), IFApi.ACTION_DOWN, downPullNum);
+                if (getArguments() != null) {
+                    presenter.getData(getArguments().getString("id"), IFApi.ACTION_DOWN, downPullNum);
+                }
             }
         });
     }

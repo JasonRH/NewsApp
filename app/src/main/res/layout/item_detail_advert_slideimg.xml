@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:fresco="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:padding="6dp"
-    >
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="6dp">
 
     <TextView
-        android:id="@+id/tv_title"
+        android:id="@+id/item_detail_advert_slideimg_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:ellipsize="end"
         android:maxLines="2"
         android:text=""
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black" />
 
 
     <LinearLayout
@@ -24,37 +23,34 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/iv_1"
+            android:id="@+id/item_detail_advert_slideimg_1"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_margin="4dp"
             android:layout_weight="1"
             android:adjustViewBounds="true"
             android:background="#E8E8E8"
-            android:scaleType="centerCrop"
-            />
+            android:scaleType="centerCrop" />
 
         <ImageView
-            android:id="@+id/iv_2"
+            android:id="@+id/item_detail_advert_slideimg_2"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:adjustViewBounds="true"
             android:background="#E8E8E8"
-            android:scaleType="centerCrop"
-            />
+            android:scaleType="centerCrop" />
 
         <ImageView
-            android:id="@+id/iv_3"
+            android:id="@+id/item_detail_advert_slideimg_3"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_margin="4dp"
             android:layout_weight="1"
             android:adjustViewBounds="true"
             android:background="#E8E8E8"
-            android:scaleType="fitXY"
-            />
+            android:scaleType="fitXY" />
 
     </LinearLayout>
 
@@ -65,27 +61,25 @@
         android:orientation="horizontal">
 
 
-
         <ImageView
-            android:id="@+id/iv_close"
+            android:id="@+id/item_detail_advert_slideimg_close"
             android:layout_width="15dp"
-            android:layout_alignParentRight="true"
             android:layout_height="15dp"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/ic_news_close"/>
+            android:src="@mipmap/ic_news_close" />
 
         <TextView
-            android:id="@+id/tv_source"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/iv_close"
+            android:id="@+id/item_detail_advert_slideimg_source"
             android:layout_width="20dp"
             android:layout_height="11dp"
-            android:text="广告"
+            android:layout_centerVertical="true"
             android:layout_marginRight="8dp"
-            android:textColor="@android:color/holo_blue_light"
+            android:layout_toLeftOf="@+id/item_detail_advert_slideimg_close"
             android:gravity="center"
-            android:textSize="8sp"
-            />
+            android:text="广告"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="8sp" />
 
     </RelativeLayout>
 
@@ -93,5 +87,5 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_margin="4dp"
-        android:background="#8a8a8a"/>
+        android:background="#8a8a8a" />
 </LinearLayout>

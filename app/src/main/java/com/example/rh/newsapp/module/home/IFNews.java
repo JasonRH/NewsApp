@@ -12,8 +12,6 @@ public interface IFNews {
     interface View {
         /**
          * 加载新闻数据
-         *
-         * @param itemBeanList
          */
         void loadData(List<NewsDetail.ItemBean> itemBeanList);
 
@@ -26,16 +24,12 @@ public interface IFNews {
 
         /**
          * 加载置顶新闻数据
-         *
-         * @param newsDetail
          */
         void loadTopNewsData(NewsDetail newsDetail);
 
 
         /**
          * 加载更多新闻数据
-         *
-         * @param itemBeanList
          */
         void loadMoreData(List<NewsDetail.ItemBean> itemBeanList);
 

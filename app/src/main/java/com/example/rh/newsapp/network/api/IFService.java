@@ -2,6 +2,8 @@ package com.example.rh.newsapp.network.api;
 
 import com.example.rh.newsapp.model.NewsArticleBean;
 import com.example.rh.newsapp.model.NewsDetail;
+import com.example.rh.newsapp.model.VideoChannelBean;
+import com.example.rh.newsapp.model.VideoDetailBean;
 
 import java.util.List;
 
@@ -27,4 +29,14 @@ public interface IFService {
 
     @GET
     Observable<NewsArticleBean> getNewsArticleWithCmpp(@Url String url,
-                                                       @Query("aid") String aid);}
+                                                       @Query("aid") String aid);
+
+    @GET(IFApi.IFengApi+"ifengvideoList")
+    Observable<List<VideoChannelBean>> getVideoChannel(@Query("page") int page);
+
+    @GET(IFApi.IFengApi+"ifengvideoList")
+    Observable<List<VideoDetailBean>> getVideoDetail(@Query("page") int page,
+                                                     @Query("listtype") String listtype,
+                                                     @Query("typeid") String typeid);
+
+}

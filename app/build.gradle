@@ -71,6 +71,7 @@ dependencies {
 
     //视频
     implementation 'cn.jzvd:jiaozivideoplayer:6.2.7'
+    implementation 'fm.jiecao:jiecaovideoplayer:5.7'
 
     implementation 'com.android.support:cardview-v7:27.0.2'
 

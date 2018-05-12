@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 
 import com.example.rh.newsapp.MyApplication;
 import com.example.rh.newsapp.R;
-import com.example.rh.newsapp.adapter.HotFragmentPagerAdapter;
+import com.example.rh.newsapp.adapter.HomeFragmentPagerAdapter;
 import com.example.rh.newsapp.base.SupportFragment;
 import com.example.rh.newsapp.model.Channel;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -55,7 +55,7 @@ public class HomeFragment extends SupportFragment {
 
         List<Channel> channels = getChannel();
         //initFragment();
-        HotFragmentPagerAdapter pagerAdapter = new HotFragmentPagerAdapter(getChildFragmentManager(), channels);
+        HomeFragmentPagerAdapter pagerAdapter = new HomeFragmentPagerAdapter(getChildFragmentManager(), channels);
         viewPager.setAdapter(pagerAdapter);
 
         //SlidingTabLayout和ViewPager有多种setViewPager（，，，）关联方法，甚至连适配器都不用自己实例化，此处采用最基本的关联

@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.rh.newsapp.R;
-import com.example.rh.newsapp.adapter.HomeFragmentPagerAdapter;
+import com.example.rh.newsapp.adapter.HotchpotchFragmentPagerAdapter;
 import com.example.rh.newsapp.module.Hotchpotch.bing.BingPictureFragment;
 import com.example.rh.newsapp.module.Hotchpotch.joke.JokeFragment;
 import com.example.rh.newsapp.module.Hotchpotch.photo.PhotoFragment;
@@ -55,13 +55,13 @@ public class HotchpotchFragment extends Fragment {
 
     private void initFragmentPagerAdapter() {
         List<Fragment> fragmentList = new ArrayList<>();
-        String[] strings = new String[]{"必应", "段子", "图片"};
+        String[] strings = new String[]{"必应", "图片", "段子"};
 
         fragmentList.add(BingPictureFragment.getInstance());
-        fragmentList.add(JokeFragment.getInstance());
         fragmentList.add(PhotoFragment.getInstance());
+        fragmentList.add(JokeFragment.getInstance());
 
-        HomeFragmentPagerAdapter pagerAdapter = new HomeFragmentPagerAdapter(getChildFragmentManager(), fragmentList, strings);
+        HotchpotchFragmentPagerAdapter pagerAdapter = new HotchpotchFragmentPagerAdapter(getChildFragmentManager(), fragmentList, strings);
         viewPager.setAdapter(pagerAdapter);
     }
 

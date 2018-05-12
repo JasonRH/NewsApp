@@ -1,7 +1,5 @@
 package com.example.rh.newsapp.module.home;
 
-import android.util.Log;
-
 import com.example.rh.newsapp.base.BasePresenter;
 import com.example.rh.newsapp.model.NewsDetail;
 import com.example.rh.newsapp.network.api.IFApi;
@@ -59,42 +57,52 @@ public class IFNewsPresenter extends BasePresenter<IFNews.View> implements IFNew
                         while (iterator.hasNext()) {
                             try {
                                 NewsDetail.ItemBean bean = iterator.next();
-                                if (bean.getType().equals(IFNewsUtils.TYPE_DOC)) {
-                                    if (bean.getStyle().getView() != null) {
-                                        if (bean.getStyle().getView().equals(IFNewsUtils.VIEW_TITLEIMG)) {
-                                            bean.itemType = NewsDetail.ItemBean.TYPE_DOC_TITLEIMG;
-                                        } else {
-                                            bean.itemType = NewsDetail.ItemBean.TYPE_DOC_SLIDEIMG;
+                                switch (bean.getType()) {
+                                    case IFNewsUtils.TYPE_DOC:
+                                        if (bean.getStyle().getView() != null) {
+                                            if (bean.getStyle().getView().equals(IFNewsUtils.VIEW_TITLEIMG)) {
+                                                bean.itemType = NewsDetail.ItemBean.TYPE_DOC_TITLEIMG;
+                                            } else {
+                                                bean.itemType = NewsDetail.ItemBean.TYPE_DOC_SLIDEIMG;
+                                            }
                                         }
-                                    }
-                                } else if (bean.getType().equals(IFNewsUtils.TYPE_ADVERT)) {
-                                    if (bean.getStyle() != null) {
-                                        if (bean.getStyle().getView().equals(IFNewsUtils.VIEW_TITLEIMG)) {
-                                            bean.itemType = NewsDetail.ItemBean.TYPE_ADVERT_TITLEIMG;
-                                        } else if (bean.getStyle().getView().equals(IFNewsUtils.VIEW_SLIDEIMG)) {
-                                            bean.itemType = NewsDetail.ItemBean.TYPE_ADVERT_SLIDEIMG;
+                                        break;
+                                    case IFNewsUtils.TYPE_ADVERT:
+                                        if (bean.getStyle() != null) {
+                                            switch (bean.getStyle().getView()) {
+                                                case IFNewsUtils.VIEW_TITLEIMG:
+                                                    bean.itemType = NewsDetail.ItemBean.TYPE_ADVERT_TITLEIMG;
+                                                    break;
+                                                case IFNewsUtils.VIEW_SLIDEIMG:
+                                                    bean.itemType = NewsDetail.ItemBean.TYPE_ADVERT_SLIDEIMG;
+                                                    break;
+                                                default:
+                                                    bean.itemType = NewsDetail.ItemBean.TYPE_ADVERT_LONGIMG;
+                                                    break;
+                                            }
                                         } else {
-                                            bean.itemType = NewsDetail.ItemBean.TYPE_ADVERT_LONGIMG;
+                                            //bean.itemType = NewsDetail.ItemBean.TYPE_ADVERT_TITLEIMG;
+                                            iterator.remove();
                                         }
-                                    } else {
-                                        //bean.itemType = NewsDetail.ItemBean.TYPE_ADVERT_TITLEIMG;
+                                        break;
+                                    case IFNewsUtils.TYPE_SLIDE:
+                                        if ("doc".equals(bean.getLink().getType())) {
+                                            if (bean.getStyle().getView().equals(IFNewsUtils.VIEW_SLIDEIMG)) {
+                                                bean.itemType = NewsDetail.ItemBean.TYPE_DOC_SLIDEIMG;
+                                            } else {
+                                                bean.itemType = NewsDetail.ItemBean.TYPE_DOC_TITLEIMG;
+                                            }
+                                        } else {
+                                            bean.itemType = NewsDetail.ItemBean.TYPE_SLIDE;
+                                        }
+                                        break;
+                                    case IFNewsUtils.TYPE_PHVIDEO:
+                                        bean.itemType = NewsDetail.ItemBean.TYPE_PHVIDEO;
+                                        break;
+                                    default:
+                                        // 凤凰新闻 类型比较多，目前只处理能处理的类型
                                         iterator.remove();
-                                    }
-                                } else if (bean.getType().equals(IFNewsUtils.TYPE_SLIDE)) {
-                                    if (bean.getLink().getType().equals("doc")) {
-                                        if (bean.getStyle().getView().equals(IFNewsUtils.VIEW_SLIDEIMG)) {
-                                            bean.itemType = NewsDetail.ItemBean.TYPE_DOC_SLIDEIMG;
-                                        } else {
-                                            bean.itemType = NewsDetail.ItemBean.TYPE_DOC_TITLEIMG;
-                                        }
-                                    } else {
-                                        bean.itemType = NewsDetail.ItemBean.TYPE_SLIDE;
-                                    }
-                                } else if (bean.getType().equals(IFNewsUtils.TYPE_PHVIDEO)) {
-                                    bean.itemType = NewsDetail.ItemBean.TYPE_PHVIDEO;
-                                } else {
-                                    // 凤凰新闻 类型比较多，目前只处理能处理的类型
-                                    iterator.remove();
+                                        break;
                                 }
                             } catch (Exception e) {
                                 iterator.remove();
