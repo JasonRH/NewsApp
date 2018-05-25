@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">NewsApp</string>
     <string name="title_activity_main3">Main3Activity</string>
-    <string name="home_refresh">刷新</string>
+    <string name="home_refresh">新闻</string>
     <string name="home_video">视频</string>
     <string name="home_hot">榜单</string>
     <string name="home_settings">我的</string>

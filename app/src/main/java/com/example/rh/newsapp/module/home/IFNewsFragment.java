@@ -19,7 +19,7 @@ import com.example.rh.newsapp.activity.ArticleActivity;
 import com.example.rh.newsapp.activity.WebActivity;
 import com.example.rh.newsapp.adapter.IFNewsAdapter;
 import com.example.rh.newsapp.base.BaseHomeFragment;
-import com.example.rh.newsapp.model.NewsDetail;
+import com.example.rh.newsapp.model.NewsDetailBean;
 import com.example.rh.newsapp.network.api.IFApi;
 import com.example.rh.newsapp.utils.IFNewsUtils;
 import com.example.rh.newsapp.utils.ImageLoaderUtil;
@@ -48,6 +48,9 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements IFNews.View {
     private static final String TAG = "IFNewsFragment";
+    /**
+     * 下拉刷新控件
+     */
     private PtrClassicFrameLayout ptrClassicFrameLayout;
     private RecyclerView recyclerView;
     private MultiStateView multiStateView;
@@ -56,9 +59,9 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
     private int upPullNum = 1;
     private int downPullNum = 1;
     private IFNewsAdapter ifNewsAdapter;
-    private List<NewsDetail.ItemBean> beanList = new ArrayList<>();
+    private List<NewsDetailBean.ItemBean> beanList = new ArrayList<>();
 
-    private List<NewsDetail.ItemBean> mBannerList = new ArrayList<>();
+    private List<NewsDetailBean.ItemBean> mBannerList = new ArrayList<>();
     /**
      * 顶部banner
      */
@@ -123,7 +126,7 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
         ifNewsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                NewsDetail.ItemBean itemBean = (NewsDetail.ItemBean) adapter.getItem(position);
+                NewsDetailBean.ItemBean itemBean = (NewsDetailBean.ItemBean) adapter.getItem(position);
                 toStartActivity(itemBean);
             }
         });
@@ -174,7 +177,7 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
      */
     private void initBanner() {
         viewFocus = LayoutInflater.from(getActivity()).inflate(R.layout.news_detail_headerview, null);
-        mBanner =  viewFocus.findViewById(R.id.banner);
+        mBanner = viewFocus.findViewById(R.id.banner);
         //设置banner样式
         mBanner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
                 .setImageLoader(new ImageLoader() {
@@ -199,7 +202,7 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
 
 
     @Override
-    public void loadData(List<NewsDetail.ItemBean> itemBeanList) {
+    public void loadData(List<NewsDetailBean.ItemBean> itemBeanList) {
         Log.e(TAG, "loadData: ");
         if (itemBeanList == null || itemBeanList.size() == 0) {
             //下拉刷新完成
@@ -223,12 +226,12 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
 
 
     @Override
-    public void loadBannerData(NewsDetail newsDetail) {
+    public void loadBannerData(NewsDetailBean newsDetailBean) {
         Log.e(TAG, "loadBannerData: ");
         List<String> mTitleList = new ArrayList<>();
         List<String> mUrlList = new ArrayList<>();
         mBannerList.clear();
-        for (NewsDetail.ItemBean bean : newsDetail.getItem()) {
+        for (NewsDetailBean.ItemBean bean : newsDetailBean.getItem()) {
             if (!TextUtils.isEmpty(bean.getThumbnail())) {
                 mTitleList.add(bean.getTitle());
                 mBannerList.add(bean);
@@ -246,13 +249,13 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
     }
 
     @Override
-    public void loadTopNewsData(NewsDetail newsDetail) {
+    public void loadTopNewsData(NewsDetailBean newsDetailBean) {
         //Log.e(TAG, "loadTopNewsData: ");
     }
 
 
     @Override
-    public void loadMoreData(List<NewsDetail.ItemBean> itemBeanList) {
+    public void loadMoreData(List<NewsDetailBean.ItemBean> itemBeanList) {
         if (itemBeanList == null || itemBeanList.size() == 0) {
             ifNewsAdapter.loadMoreFail();
         } else {
@@ -288,21 +291,21 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
     /**
      * 打开新闻详情页
      */
-    private void toStartActivity(NewsDetail.ItemBean itemBean) {
+    private void toStartActivity(NewsDetailBean.ItemBean itemBean) {
         if (itemBean != null) {
             switch (itemBean.getItemType()) {
-                case NewsDetail.ItemBean.TYPE_DOC_TITLEIMG:
-                case NewsDetail.ItemBean.TYPE_DOC_SLIDEIMG:
+                case NewsDetailBean.ItemBean.TYPE_DOC_TITLEIMG:
+                case NewsDetailBean.ItemBean.TYPE_DOC_SLIDEIMG:
                     Intent intent = new Intent(getActivity(), ArticleActivity.class);
                     intent.putExtra("url", itemBean.getDocumentId());
                     startActivity(intent);
                     break;
-                case NewsDetail.ItemBean.TYPE_SLIDE:
+                case NewsDetailBean.ItemBean.TYPE_SLIDE:
                     Log.e(TAG, "toStartActivity:TYPE_SLIDE ");
                     break;
-                case NewsDetail.ItemBean.TYPE_ADVERT_TITLEIMG:
-                case NewsDetail.ItemBean.TYPE_ADVERT_SLIDEIMG:
-                case NewsDetail.ItemBean.TYPE_ADVERT_LONGIMG:
+                case NewsDetailBean.ItemBean.TYPE_ADVERT_TITLEIMG:
+                case NewsDetailBean.ItemBean.TYPE_ADVERT_SLIDEIMG:
+                case NewsDetailBean.ItemBean.TYPE_ADVERT_LONGIMG:
                     String url = itemBean.getLink().getWeburl();
                     if (!TextUtils.isEmpty(url)) {
                         Intent adIntent = new Intent(getActivity(), WebActivity.class);
@@ -310,7 +313,7 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
                         startActivity(adIntent);
                     }
                     break;
-                case NewsDetail.ItemBean.TYPE_PHVIDEO:
+                case NewsDetailBean.ItemBean.TYPE_PHVIDEO:
                     MyToast.show("TYPE_PHVIDEO");
                     break;
                 default:
@@ -321,7 +324,7 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
     /**
      * 打开轮播图详情页
      */
-    private void toTopStartActivity(NewsDetail.ItemBean itemBean) {
+    private void toTopStartActivity(NewsDetailBean.ItemBean itemBean) {
         if (itemBean != null) {
             switch (itemBean.getType()) {
                 case IFNewsUtils.TYPE_DOC:

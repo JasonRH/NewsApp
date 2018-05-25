@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
@@ -43,11 +44,11 @@ public class PictureActivity extends AppCompatActivity {
         words = bingDailyBean.getCopyright();
 
        // Toolbar toolbar1 = (Toolbar) findViewById(R.id.toolbar1);
-        CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_tool);
-        ImageView pictureImageView = (ImageView) findViewById(R.id.picture_image_view);
-        author = (TextView) findViewById(R.id.picture_author);
-        title = (TextView) findViewById(R.id.picture_title);
-        pictureContentText = (TextView) findViewById(R.id.picture_content_text);
+        CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_tool);
+        ImageView pictureImageView = findViewById(R.id.picture_image_view);
+        author = findViewById(R.id.picture_author);
+        title = findViewById(R.id.picture_title);
+        pictureContentText = findViewById(R.id.picture_content_text);
         //设置toolbar替代原ActionBar
         //setSupportActionBar(toolbar1);
         ActionBar actionBar = getSupportActionBar();
@@ -61,6 +62,12 @@ public class PictureActivity extends AppCompatActivity {
         //加载每日一文
         intContent(pictureName);
 
+        findViewById(R.id.activity_picture_floatButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyToast.show("开始下载图片......");
+            }
+        });
     }
 
     private void intContent(String date) {

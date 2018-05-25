@@ -100,11 +100,11 @@
 
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatButton"
+        android:id="@+id/activity_picture_floatButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        app:srcCompat="@drawable/ic_done_white_24dp"
+        app:srcCompat="@drawable/ic_file_download"
         app:layout_anchor="@id/appBar"
         app:layout_anchorGravity="bottom|end" />
 

@@ -1,7 +1,7 @@
 package com.example.rh.newsapp.module.home;
 
 import com.example.rh.newsapp.base.BasePresenter;
-import com.example.rh.newsapp.model.NewsDetail;
+import com.example.rh.newsapp.model.NewsDetailBean;
 import com.example.rh.newsapp.network.api.IFApi;
 import com.example.rh.newsapp.network.api.IFService;
 import com.example.rh.newsapp.network.retrofit.RetrofitFactory;
@@ -35,35 +35,35 @@ public class IFNewsPresenter extends BasePresenter<IFNews.View> implements IFNew
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new Function<List<NewsDetail>, NewsDetail>() {
+                .map(new Function<List<NewsDetailBean>, NewsDetailBean>() {
                     @Override
-                    public NewsDetail apply(List<NewsDetail> newsDetails) throws Exception {
-                        for (NewsDetail newsDetail : newsDetails) {
-                            if (IFNewsUtils.isBannerNews(newsDetail)) {
-                                getview().loadBannerData(newsDetail);
+                    public NewsDetailBean apply(List<NewsDetailBean> newsDetailBeans) throws Exception {
+                        for (NewsDetailBean newsDetailBean : newsDetailBeans) {
+                            if (IFNewsUtils.isBannerNews(newsDetailBean)) {
+                                getview().loadBannerData(newsDetailBean);
                             }
-                            if (IFNewsUtils.isTopNews(newsDetail)) {
-                                getview().loadTopNewsData(newsDetail);
+                            if (IFNewsUtils.isTopNews(newsDetailBean)) {
+                                getview().loadTopNewsData(newsDetailBean);
                             }
                         }
-                        return newsDetails.get(0);
+                        return newsDetailBeans.get(0);
                     }
                 })
                 .observeOn(Schedulers.io())
-                .map(new Function<NewsDetail, List<NewsDetail.ItemBean>>() {
+                .map(new Function<NewsDetailBean, List<NewsDetailBean.ItemBean>>() {
                     @Override
-                    public List<NewsDetail.ItemBean> apply(@NonNull NewsDetail newsDetail) throws Exception {
-                        Iterator<NewsDetail.ItemBean> iterator = newsDetail.getItem().iterator();
+                    public List<NewsDetailBean.ItemBean> apply(@NonNull NewsDetailBean newsDetailBean) throws Exception {
+                        Iterator<NewsDetailBean.ItemBean> iterator = newsDetailBean.getItem().iterator();
                         while (iterator.hasNext()) {
                             try {
-                                NewsDetail.ItemBean bean = iterator.next();
+                                NewsDetailBean.ItemBean bean = iterator.next();
                                 switch (bean.getType()) {
                                     case IFNewsUtils.TYPE_DOC:
                                         if (bean.getStyle().getView() != null) {
                                             if (bean.getStyle().getView().equals(IFNewsUtils.VIEW_TITLEIMG)) {
-                                                bean.itemType = NewsDetail.ItemBean.TYPE_DOC_TITLEIMG;
+                                                bean.itemType = NewsDetailBean.ItemBean.TYPE_DOC_TITLEIMG;
                                             } else {
-                                                bean.itemType = NewsDetail.ItemBean.TYPE_DOC_SLIDEIMG;
+                                                bean.itemType = NewsDetailBean.ItemBean.TYPE_DOC_SLIDEIMG;
                                             }
                                         }
                                         break;
@@ -71,33 +71,33 @@ public class IFNewsPresenter extends BasePresenter<IFNews.View> implements IFNew
                                         if (bean.getStyle() != null) {
                                             switch (bean.getStyle().getView()) {
                                                 case IFNewsUtils.VIEW_TITLEIMG:
-                                                    bean.itemType = NewsDetail.ItemBean.TYPE_ADVERT_TITLEIMG;
+                                                    bean.itemType = NewsDetailBean.ItemBean.TYPE_ADVERT_TITLEIMG;
                                                     break;
                                                 case IFNewsUtils.VIEW_SLIDEIMG:
-                                                    bean.itemType = NewsDetail.ItemBean.TYPE_ADVERT_SLIDEIMG;
+                                                    bean.itemType = NewsDetailBean.ItemBean.TYPE_ADVERT_SLIDEIMG;
                                                     break;
                                                 default:
-                                                    bean.itemType = NewsDetail.ItemBean.TYPE_ADVERT_LONGIMG;
+                                                    bean.itemType = NewsDetailBean.ItemBean.TYPE_ADVERT_LONGIMG;
                                                     break;
                                             }
                                         } else {
-                                            //bean.itemType = NewsDetail.ItemBean.TYPE_ADVERT_TITLEIMG;
+                                            //bean.itemType = NewsDetailBean.ItemBean.TYPE_ADVERT_TITLEIMG;
                                             iterator.remove();
                                         }
                                         break;
                                     case IFNewsUtils.TYPE_SLIDE:
                                         if ("doc".equals(bean.getLink().getType())) {
                                             if (bean.getStyle().getView().equals(IFNewsUtils.VIEW_SLIDEIMG)) {
-                                                bean.itemType = NewsDetail.ItemBean.TYPE_DOC_SLIDEIMG;
+                                                bean.itemType = NewsDetailBean.ItemBean.TYPE_DOC_SLIDEIMG;
                                             } else {
-                                                bean.itemType = NewsDetail.ItemBean.TYPE_DOC_TITLEIMG;
+                                                bean.itemType = NewsDetailBean.ItemBean.TYPE_DOC_TITLEIMG;
                                             }
                                         } else {
-                                            bean.itemType = NewsDetail.ItemBean.TYPE_SLIDE;
+                                            bean.itemType = NewsDetailBean.ItemBean.TYPE_SLIDE;
                                         }
                                         break;
                                     case IFNewsUtils.TYPE_PHVIDEO:
-                                        bean.itemType = NewsDetail.ItemBean.TYPE_PHVIDEO;
+                                        bean.itemType = NewsDetailBean.ItemBean.TYPE_PHVIDEO;
                                         break;
                                     default:
                                         // 凤凰新闻 类型比较多，目前只处理能处理的类型
@@ -109,18 +109,18 @@ public class IFNewsPresenter extends BasePresenter<IFNews.View> implements IFNew
                                 e.printStackTrace();
                             }
                         }
-                        return newsDetail.getItem();
+                        return newsDetailBean.getItem();
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<NewsDetail.ItemBean>>() {
+                .subscribe(new Observer<List<NewsDetailBean.ItemBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         disposable.add(d);
                     }
 
                     @Override
-                    public void onNext(List<NewsDetail.ItemBean> itemBeans) {
+                    public void onNext(List<NewsDetailBean.ItemBean> itemBeans) {
                         if (!action.equals(IFApi.ACTION_UP)) {
                             getview().loadData(itemBeans);
                         } else {

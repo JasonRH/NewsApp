@@ -1,7 +1,7 @@
 package com.example.rh.newsapp.network.api;
 
 import com.example.rh.newsapp.model.NewsArticleBean;
-import com.example.rh.newsapp.model.NewsDetail;
+import com.example.rh.newsapp.model.NewsDetailBean;
 import com.example.rh.newsapp.model.VideoChannelBean;
 import com.example.rh.newsapp.model.VideoDetailBean;
 
@@ -19,9 +19,9 @@ import retrofit2.http.Url;
 public interface IFService {
 
     @GET(IFApi.IFengApi + "ClientNews")
-    Observable<List<NewsDetail>> getNewsDetail(@Query("id") String id,
-                                               @Query("action") String action,
-                                               @Query("pullNum") int pullNum);
+    Observable<List<NewsDetailBean>> getNewsDetail(@Query("id") String id,
+                                                   @Query("action") String action,
+                                                   @Query("pullNum") int pullNum);
 
 
     @GET(IFApi.IFengApi+"api_vampire_article_detail")

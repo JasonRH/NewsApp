@@ -1,6 +1,6 @@
 package com.example.rh.newsapp.module.home;
 
-import com.example.rh.newsapp.model.NewsDetail;
+import com.example.rh.newsapp.model.NewsDetailBean;
 
 import java.util.List;
 
@@ -13,25 +13,25 @@ public interface IFNews {
         /**
          * 加载新闻数据
          */
-        void loadData(List<NewsDetail.ItemBean> itemBeanList);
+        void loadData(List<NewsDetailBean.ItemBean> itemBeanList);
 
         /**
          * 加载顶部banner数据
          *
-         * @param newsDetail
+         * @param newsDetailBean
          */
-        void loadBannerData(NewsDetail newsDetail);
+        void loadBannerData(NewsDetailBean newsDetailBean);
 
         /**
          * 加载置顶新闻数据
          */
-        void loadTopNewsData(NewsDetail newsDetail);
+        void loadTopNewsData(NewsDetailBean newsDetailBean);
 
 
         /**
          * 加载更多新闻数据
          */
-        void loadMoreData(List<NewsDetail.ItemBean> itemBeanList);
+        void loadMoreData(List<NewsDetailBean.ItemBean> itemBeanList);
 
 
         void showToast(String s);

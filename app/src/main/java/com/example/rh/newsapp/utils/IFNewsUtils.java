@@ -1,7 +1,7 @@
 package com.example.rh.newsapp.utils;
 
 
-import com.example.rh.newsapp.model.NewsDetail;
+import com.example.rh.newsapp.model.NewsDetailBean;
 
 /**
  * desc:
@@ -35,19 +35,19 @@ public class IFNewsUtils {
 
 
 
-    public static boolean isBannerNews(NewsDetail detail) {
+    public static boolean isBannerNews(NewsDetailBean detail) {
         return detail.getType().equals(TYPE_BANNER);
     }
 
-    public static boolean isTopNews(NewsDetail detail) {
+    public static boolean isTopNews(NewsDetailBean detail) {
         return detail.getType().equals(TYPE_TOP);
     }
 
-    public static boolean isListNews(NewsDetail detail) {
+    public static boolean isListNews(NewsDetailBean detail) {
         return detail.getType().equals(TYPE_List);
     }
 
-    public boolean isAvertNews(NewsDetail.ItemBean bean) {
+    public boolean isAvertNews(NewsDetailBean.ItemBean bean) {
         return bean.getType().equals(TYPE_ADVERT);
     }
 

@@ -4,16 +4,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-
 import com.example.rh.newsapp.MyApplication;
 import com.example.rh.newsapp.R;
 import com.example.rh.newsapp.adapter.HomeFragmentPagerAdapter;
 import com.example.rh.newsapp.base.SupportFragment;
 import com.example.rh.newsapp.model.Channel;
+import com.example.rh.newsapp.utils.MyToast;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import java.util.ArrayList;
@@ -27,6 +27,7 @@ import java.util.List;
 public class HomeFragment extends SupportFragment {
 
     public static HomeFragment homeFragment;
+    public static boolean isHide =false;
 
 
     public static HomeFragment getInstance() {
@@ -47,7 +48,6 @@ public class HomeFragment extends SupportFragment {
 
     private void initView(View view) {
         SlidingTabLayout tabLayout = view.findViewById(R.id.home_tab_layout);
-        ImageButton imageButton = view.findViewById(R.id.home_img_button);
         ViewPager viewPager = view.findViewById(R.id.home_viewpager);
 
         //限定预加载的页面个数
@@ -60,6 +60,14 @@ public class HomeFragment extends SupportFragment {
 
         //SlidingTabLayout和ViewPager有多种setViewPager（，，，）关联方法，甚至连适配器都不用自己实例化，此处采用最基本的关联
         tabLayout.setViewPager(viewPager);
+
+        view.findViewById(R.id.home_img_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyToast.show("功能开发中，敬请关注！");
+            }
+        });
+
     }
 
 
@@ -87,6 +95,19 @@ public class HomeFragment extends SupportFragment {
         }
 
         return myChannels;
+    }
+
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+            // 隐藏
+            isHide = true;
+        } else {
+            // 可视
+            isHide = false;
+        }
     }
 
 }

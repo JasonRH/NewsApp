@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import com.example.rh.newsapp.base.BaseActivity;
 import com.example.rh.newsapp.fragment.HotchpotchFragment;
 import com.example.rh.newsapp.fragment.HomeFragment;
+import com.example.rh.newsapp.fragment.SettingFragment;
 import com.example.rh.newsapp.fragment.VideoFragment;
 import com.example.rh.newsapp.widget.BottomNavigationViewHelper;
 
@@ -18,6 +19,7 @@ public class Main3Activity extends BaseActivity {
     private HotchpotchFragment hotchpotchFragment;
     private VideoFragment videoFragment;
     private HomeFragment homeFragment;
+    private SettingFragment settingFragment;
 
     @Override
     protected void onLazyLoad() {
@@ -49,7 +51,9 @@ public class Main3Activity extends BaseActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home_refresh:
-                    showFragment(0);
+                    if (HomeFragment.isHide) {
+                        showFragment(0);
+                    }
                     return true;
                 case R.id.navigation_home_video:
                     showFragment(1);
@@ -75,7 +79,7 @@ public class Main3Activity extends BaseActivity {
                     homeFragment = HomeFragment.getInstance();
                     fragmentManager.add(R.id.main_activity_container, homeFragment);
                 } else {
-                    fragmentManager.show(homeFragment);
+                        fragmentManager.show(homeFragment);
                 }
                 break;
             case 1:
@@ -95,6 +99,12 @@ public class Main3Activity extends BaseActivity {
                 }
                 break;
             case 3:
+                if (settingFragment == null) {
+                    settingFragment = SettingFragment.getInstance();
+                    fragmentManager.add(R.id.main_activity_container, settingFragment);
+                } else {
+                    fragmentManager.show(settingFragment);
+                }
                 break;
             default:
                 break;
@@ -111,6 +121,9 @@ public class Main3Activity extends BaseActivity {
         }
         if (homeFragment != null) {
             fragmentManager.hide(homeFragment);
+        }
+        if (settingFragment != null){
+            fragmentManager.hide(settingFragment);
         }
     }
 }

@@ -6,11 +6,11 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import java.io.Serializable;
 import java.util.List;
 
-public class NewsDetail implements Serializable {
+public class NewsDetailBean implements Serializable {
 
     @Override
     public String toString() {
-        return "NewsDetail{" +
+        return "NewsDetailBean{" +
                 "listId='" + listId + '\'' +
                 ", type='" + type + '\'' +
                 ", expiredTime=" + expiredTime +
