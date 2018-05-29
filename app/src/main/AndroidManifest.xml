@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -42,6 +43,11 @@
             android:screenOrientation="portrait"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="stateAlwaysHidden"/>
+
+        <activity
+            android:name=".activity.OpenFileActivity"
+            android:label=""
+            android:theme="@style/PictureTheme" />
     </application>
 
 </manifest>

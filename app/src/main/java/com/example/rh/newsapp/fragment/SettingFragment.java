@@ -1,5 +1,6 @@
 package com.example.rh.newsapp.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,14 +10,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.rh.newsapp.R;
+import com.example.rh.newsapp.activity.OpenFileActivity;
 import com.example.rh.newsapp.adapter.SettingAdapter;
 import com.example.rh.newsapp.model.SettingItem;
+import com.example.rh.newsapp.utils.CacheUtils;
 import com.example.rh.newsapp.utils.MyToast;
 
 import java.util.ArrayList;
@@ -30,8 +32,9 @@ public class SettingFragment extends Fragment {
 
     public static SettingFragment settingFragment;
     private List<SettingItem> data;
-    String[] titles = {"文件管理", "夜间模式", "关于"};
-    int[] imgUrls = {R.drawable.ic_sd_storage, R.drawable.ic_brightness_2, R.drawable.ic_smartphone};
+    private String cache;
+    private String[] titles = {"文件管理", "夜间模式", "关于"};
+    private int[] imgUrls = {R.drawable.ic_sd_storage, R.drawable.ic_brightness_2, R.drawable.ic_smartphone};
 
     public static SettingFragment getInstance() {
         if (settingFragment == null) {
@@ -58,6 +61,12 @@ public class SettingFragment extends Fragment {
             item.setImgUrl(imgUrls[i]);
             data.add(item);
         }
+        //获取缓存大小
+        try {
+            cache = CacheUtils.getTotalCacheSize(getContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initView(View view) {
@@ -67,31 +76,32 @@ public class SettingFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         RelativeLayout layout = view.findViewById(R.id.setting_clear);
-        TextView cache = view.findViewById(R.id.setting_cache);
+        TextView cacheText = view.findViewById(R.id.setting_cache);
+        cacheText.setText(cache);
 
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (position) {
-                    case 0:
-                        MyToast.show("功能开发中，敬请关注！");
-                        break;
-                    case 1:
-                        MyToast.show("功能开发中，敬请关注！");
-                        break;
-                    case 2:
-                        MyToast.show("功能开发中，敬请关注！");
-                        break;
-                    default:
-                        break;
-                }
+        adapter.setOnItemClickListener((adapter1, view1, position) -> {
+            switch (position) {
+                case 0:
+                    Intent intent = new Intent(getContext(), OpenFileActivity.class);
+                    startActivity(intent);
+                    break;
+                case 1:
+                    MyToast.show("功能开发中，敬请关注！");
+                    break;
+                case 2:
+                    MyToast.show("功能开发中，敬请关注！");
+                    break;
+                default:
+                    break;
             }
         });
 
-        layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MyToast.show("开发中......");
+        layout.setOnClickListener(v -> {
+            CacheUtils.clearAllCache(getContext());
+            try {
+                cacheText.setText(CacheUtils.getTotalCacheSize(getContext()));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 

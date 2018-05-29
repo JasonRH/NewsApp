@@ -88,7 +88,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/item_detail_phvideo_logo"
         app:layout_constraintRight_toRightOf="@+id/item_detail_phvideo_logo"
         app:layout_constraintTop_toTopOf="@+id/item_detail_phvideo_logo"
-        app:srcCompat="@mipmap/ic_play" />
+        app:srcCompat="@drawable/ic_play_circle" />
 
     <TextView
         android:id="@+id/item_detail_phvideo_time"
