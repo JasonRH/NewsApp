@@ -59,38 +59,6 @@ public class FileUtils {
     }
 
     /**
-     * 打开文件
-     */
-    public static void openFile(String paramString1, String paramString2, Context context) {
-        Intent localIntent = new Intent("android.intent.action.VIEW");
-        Uri localUri = Uri.fromFile(new File(paramString1));
-        String str = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(localUri.toString()));
-
-        try {
-            if ((paramString2.endsWith(".jpg")) || (paramString2.endsWith(".jpeg"))) {
-                localIntent.setDataAndType(localUri, "image/jpeg");
-            } else if (paramString2.endsWith(".3gp")) {
-                localIntent.setDataAndType(localUri, "video/3gpp");
-            } else if (paramString2.endsWith(".webm")) {
-                localIntent.setDataAndType(localUri, "video/webm");
-            } else if (paramString2.endsWith(".mkv")) {
-                localIntent.setDataAndType(localUri, "video/x-matroska");
-            } else {
-                if (str == null) {
-                    str = "*/*";
-                }
-                localIntent.setDataAndType(localUri, str);
-            }
-            context.startActivity(localIntent);
-        } catch (Exception localException) {
-            Toast.makeText(context, "打开失败", Toast.LENGTH_SHORT).show();
-        }
-
-
-    }
-
-
-    /**
      *  
      *  * 以最省内存的方式读取本地资源的图片 
      *  * @param context 
@@ -102,10 +70,6 @@ public class FileUtils {
         //获取资源图片
         InputStream ins = context.getResources().openRawResource(resourcesId);
         BitmapFactory.Options options = new BitmapFactory.Options();
-        int inSampleSize = 1;
-        options.inJustDecodeBounds = false;
-        options.inSampleSize = inSampleSize;
-        options.inJustDecodeBounds = true;
         return BitmapFactory.decodeStream(ins, null, options);
     }
 }

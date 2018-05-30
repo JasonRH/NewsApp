@@ -3,6 +3,7 @@ package com.example.rh.newsapp.adapter;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -27,7 +28,7 @@ public class MyFileAdapter extends BaseQuickAdapter<File, BaseViewHolder> {
         super(R.layout.adapter_file_item, files);
         this.activity = activity;
         //文件夹,decodeResource图片解码，source资源，解码为Bitmap类型；
-        bmpFolder = BitmapFactory.decodeResource(activity.getResources(), R.mipmap.folder);
+        bmpFolder = FileUtils.readBitmapFromResource(activity, R.mipmap.folder);
         //文件
         bmpFile = FileUtils.readBitmapFromResource(activity, R.mipmap.whitepage32);
         bmpDoc = FileUtils.readBitmapFromResource(activity, R.mipmap.doc);

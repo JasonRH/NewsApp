@@ -20,6 +20,7 @@ import com.example.rh.newsapp.R;
 import com.example.rh.newsapp.adapter.MyFileAdapter;
 import com.example.rh.newsapp.utils.FileUtils;
 import com.example.rh.newsapp.utils.MyToast;
+import com.example.rh.newsapp.utils.OpenFileUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,6 +35,8 @@ public class OpenFileActivity extends AppCompatActivity {
     private MyFileAdapter adapter;
     List<File> files = new ArrayList<>();
     private TextView textView;
+    OpenFileUtil openFileUtil = new OpenFileUtil(this);
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,7 +89,8 @@ public class OpenFileActivity extends AppCompatActivity {
                 files.addAll(FileUtils.scanFiles(f.getPath()));
                 adapter.notifyDataSetChanged();
             } else {
-                FileUtils.openFile(f.getPath(), f.getName().toLowerCase(), view1.getContext());
+                //打开文件
+                openFileUtil.openFile(f.getPath());
             }
         });
         //更新文件目录
