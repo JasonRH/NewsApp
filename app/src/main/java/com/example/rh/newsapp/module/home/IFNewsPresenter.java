@@ -58,25 +58,32 @@ public class IFNewsPresenter extends BasePresenter<IFNews.View> implements IFNew
                             try {
                                 NewsDetailBean.ItemBean bean = iterator.next();
                                 switch (bean.getType()) {
+                                    //文章类型
                                     case IFNewsUtils.TYPE_DOC:
                                         if (bean.getStyle().getView() != null) {
                                             if (bean.getStyle().getView().equals(IFNewsUtils.VIEW_TITLEIMG)) {
+                                                //单图、小图
                                                 bean.itemType = NewsDetailBean.ItemBean.TYPE_DOC_TITLEIMG;
                                             } else {
+                                                //多图
                                                 bean.itemType = NewsDetailBean.ItemBean.TYPE_DOC_SLIDEIMG;
                                             }
                                         }
                                         break;
+                                    //广告类型
                                     case IFNewsUtils.TYPE_ADVERT:
                                         if (bean.getStyle() != null) {
                                             switch (bean.getStyle().getView()) {
                                                 case IFNewsUtils.VIEW_TITLEIMG:
+                                                    //单图、小图
                                                     bean.itemType = NewsDetailBean.ItemBean.TYPE_ADVERT_TITLEIMG;
                                                     break;
                                                 case IFNewsUtils.VIEW_SLIDEIMG:
+                                                    //多图
                                                     bean.itemType = NewsDetailBean.ItemBean.TYPE_ADVERT_SLIDEIMG;
                                                     break;
                                                 default:
+                                                    //大图
                                                     bean.itemType = NewsDetailBean.ItemBean.TYPE_ADVERT_LONGIMG;
                                                     break;
                                             }
@@ -85,17 +92,22 @@ public class IFNewsPresenter extends BasePresenter<IFNews.View> implements IFNew
                                             iterator.remove();
                                         }
                                         break;
+                                    //图片类型
                                     case IFNewsUtils.TYPE_SLIDE:
                                         if ("doc".equals(bean.getLink().getType())) {
                                             if (bean.getStyle().getView().equals(IFNewsUtils.VIEW_SLIDEIMG)) {
+                                                //多图
                                                 bean.itemType = NewsDetailBean.ItemBean.TYPE_DOC_SLIDEIMG;
                                             } else {
+                                                //单图、小图
                                                 bean.itemType = NewsDetailBean.ItemBean.TYPE_DOC_TITLEIMG;
                                             }
                                         } else {
+                                            //大图
                                             bean.itemType = NewsDetailBean.ItemBean.TYPE_SLIDE;
                                         }
                                         break;
+                                    //视频类型
                                     case IFNewsUtils.TYPE_PHVIDEO:
                                         bean.itemType = NewsDetailBean.ItemBean.TYPE_PHVIDEO;
                                         break;

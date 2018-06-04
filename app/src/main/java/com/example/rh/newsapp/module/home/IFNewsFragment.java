@@ -203,7 +203,6 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
 
     @Override
     public void loadData(List<NewsDetailBean.ItemBean> itemBeanList) {
-        Log.e(TAG, "loadData: ");
         if (itemBeanList == null || itemBeanList.size() == 0) {
             //下拉刷新完成
             ptrClassicFrameLayout.refreshComplete();
@@ -227,7 +226,6 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
 
     @Override
     public void loadBannerData(NewsDetailBean newsDetailBean) {
-        Log.e(TAG, "loadBannerData: ");
         List<String> mTitleList = new ArrayList<>();
         List<String> mUrlList = new ArrayList<>();
         mBannerList.clear();
@@ -333,7 +331,7 @@ public class IFNewsFragment extends BaseHomeFragment<IFNewsPresenter> implements
                     startActivity(intent);
                     break;
                 case IFNewsUtils.TYPE_SLIDE:
-                    Log.e(TAG, "toTopStartActivity:TYPE_SLIDE ");
+                    Log.i(TAG, "toTopStartActivity:TYPE_SLIDE ");
                     break;
                 case IFNewsUtils.TYPE_ADVERT:
                     String url = itemBean.getLink().getWeburl();

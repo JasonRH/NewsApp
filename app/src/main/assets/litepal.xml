@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <!--
+    数据库名字
+    -->
+    <dbname value="Channel" />
+
+    <!--
+    数据库的版本号
+    -->
+    <version value="1" />
+
+<!--
+    要映射的实体类路径
+-->
+        <list>
+            <mapping class="com.example.rh.newsapp.model.Channel" />
+        </list>
+
+<!--
+    可以选择存储数据库/内部或者外部,默认internal
+    <storage value="external" />-->
+
+
+</litepal>

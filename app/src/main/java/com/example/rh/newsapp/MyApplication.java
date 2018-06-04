@@ -5,6 +5,8 @@ import android.content.Context;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 
+import org.litepal.LitePal;
+
 import static com.example.rh.newsapp.utils.MyToast.initToast;
 
 /**
@@ -18,8 +20,10 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
+        //数据库
+        LitePal.initialize(this);
         initToast(context);
-        Fresco.initialize(this);
+        Fresco.initialize(context);
     }
 
     public static Context getContext() {

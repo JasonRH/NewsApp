@@ -18,19 +18,33 @@ import com.example.rh.newsapp.R;
 public class MyDialog extends Dialog {
     private TextView yesBtn;
     private TextView noBtn;
-    /**消息标题文本*/
+    /**
+     * 消息标题文本
+     */
     private TextView mTitle;
-    /**消息提示文本*/
+    /**
+     * 消息提示文本
+     */
     private TextView mContent;
-    /**从外界设置的title文本*/
+    /**
+     * 从外界设置的title文本
+     */
     private String titleStr;
-    /**从外界设置的消息文本*/
+    /**
+     * 从外界设置的消息文本
+     */
     private String messageStr;
-    /**确定文本和取消文本的显示内容*/
+    /**
+     * 确定文本和取消文本的显示内容
+     */
     private String yesStr, noStr;
-    /**取消按钮被点击了的监听器*/
+    /**
+     * 取消按钮被点击了的监听器
+     */
     private NoOnclickListener noOnClickListener;
-    /**确定按钮被点击了的监听器*/
+    /**
+     * 确定按钮被点击了的监听器
+     */
     private YesOnclickListener yesOnclickListener;
 
     public MyDialog(Context context) {
@@ -105,14 +119,12 @@ public class MyDialog extends Dialog {
      * 设置确定按钮和取消被点击的接口
      */
     public interface YesOnclickListener {
-         void onYesClick();
+        void onYesClick();
     }
 
     public interface NoOnclickListener {
-         void onNoClick();
+        void onNoClick();
     }
-
-
 
 
     /**
@@ -135,8 +147,7 @@ public class MyDialog extends Dialog {
 
 
     /**
-     *
-     * @param str 取消按钮显示的文字内容
+     * @param str                 取消按钮显示的文字内容
      * @param onNoOnClickListener 取消按钮的监听接口
      */
     public void setNoOnClickListener(String str, NoOnclickListener onNoOnClickListener) {
@@ -149,7 +160,7 @@ public class MyDialog extends Dialog {
     /**
      * 设置确定按钮的显示内容和监听
      *
-     * @param str 确定按钮显示的文字内容
+     * @param str                  确定按钮显示的文字内容
      * @param onYesOnclickListener 确定按钮的监听接口
      */
     public void setYesOnclickListener(String str, YesOnclickListener onYesOnclickListener) {
@@ -162,7 +173,7 @@ public class MyDialog extends Dialog {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-            noOnClickListener.onNoClick();
+        //super.onBackPressed();
+        noOnClickListener.onNoClick();
     }
 }

@@ -37,8 +37,16 @@
     </style>
 
 
-    <style name="Fullscreen" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="ShowImage" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--背景为黑色-->
         <item name="android:windowBackground">@android:color/background_dark</item>
+        <!--
+                //半透明
+                <item name="android:windowIsTranslucent">true</item>
+        -->
+    </style>
+
+    <style name="Fullscreen1" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
     </style>
 

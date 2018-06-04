@@ -1,9 +1,8 @@
 package com.example.rh.newsapp.adapter;
 
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.rh.newsapp.model.Channel;
 import com.example.rh.newsapp.module.home.IFNewsFragment;
@@ -14,7 +13,7 @@ import java.util.List;
  * @author RH
  * @date 2018/4/13
  */
-public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
+public class HomeFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     private List<Channel> mChannels;
 
@@ -34,9 +33,14 @@ public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
         return mChannels != null ? mChannels.size() : 0;
     }
 
-    @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
         return mChannels.get(position).getChannelName();
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        //默认 Item 的位置发生变化，销毁当前页面的fragment并重新生成
+        return POSITION_NONE;
     }
 }

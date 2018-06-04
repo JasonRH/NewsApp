@@ -23,7 +23,7 @@ android {
         sourceCompatibility 1.8
     }
 
-   /* dexOptions{
+    /* dexOptions{
         preDexLibraries = false
         javaMaxHeapSize "4g"
     }*/
@@ -39,7 +39,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
 
     implementation 'com.android.support:design:27.0.2'
-
 
     //retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
@@ -110,5 +109,9 @@ dependencies {
     compile 'com.github.florent37:viewanimator:1.0.5'
     //轮播图
     compile 'com.youth.banner:banner:1.4.10'
+    //频道管理
+    //implementation 'com.github.andyoom:draggrid:v1.1.4'
+    //数据库
+    implementation 'org.litepal.android:core:1.5.1'
 
 }
