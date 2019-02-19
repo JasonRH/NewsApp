@@ -10,6 +10,8 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        //App中所引用的方法已经超过了最大数65536个方法！
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -23,15 +25,15 @@ android {
         sourceCompatibility 1.8
     }
 
-    /* dexOptions{
-        preDexLibraries = false
-        javaMaxHeapSize "4g"
-    }*/
+    /*dexOptions{
+       preDexLibraries = false
+       javaMaxHeapSize "4g"
+   }*/
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:27.0.2'
+    implementation 'com.android.support:appcompat-v7:27.0.2'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.android.support:support-vector-drawable:27.0.2'
     implementation 'com.android.support:support-v4:27.0.2'
@@ -106,9 +108,9 @@ dependencies {
 
     //compile 'com.github.ksoichiro:android-observablescrollview:1.5.0'
     //动画
-    compile 'com.github.florent37:viewanimator:1.0.5'
+    implementation 'com.github.florent37:viewanimator:1.0.5'
     //轮播图
-    compile 'com.youth.banner:banner:1.4.10'
+    implementation 'com.youth.banner:banner:1.4.10'
     //频道管理
     //implementation 'com.github.andyoom:draggrid:v1.1.4'
     //数据库
